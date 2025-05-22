@@ -1,0 +1,30 @@
+services: 
+  postgres:
+    image: postgres:16
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: fcgApiDb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  fcg-webapi:
+    container_name: fcg-webapi
+    build:
+      context: ../
+      dockerfile: src/Fcg.WebApi/Dockerfile
+    ports:
+      - "5000:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=fcgApiDb;Username=postgres;Password=postgres
+    depends_on:
+      - postgres
+    restart: always
+
+volumes:
+  postgres_data:
