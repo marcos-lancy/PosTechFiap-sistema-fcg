@@ -1,5 +1,5 @@
 ﻿using Fcg.WebApi.Models;
-using Fcg.WebApi.Repositorues.Interfaces;
+using Fcg.WebApi.Repositories.Interfaces;
 using Fcg.WebApi.Services.Interfaces;
 
 namespace Fcg.WebApi.Services;

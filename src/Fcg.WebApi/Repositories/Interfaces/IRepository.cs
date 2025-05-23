@@ -1,6 +1,6 @@
 ﻿using Fcg.WebApi.Models;
 
-namespace Fcg.WebApi.Repositorues.Interfaces;
+namespace Fcg.WebApi.Repositories.Interfaces;
 
 public interface IRepository<T> where T : EntityBase
 {

@@ -1,6 +1,6 @@
 ﻿using Fcg.WebApi.Data.Context;
 using Fcg.WebApi.Models;
-using Fcg.WebApi.Repositorues.Interfaces;
+using Fcg.WebApi.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fcg.WebApi.Repositories.Implementations;
