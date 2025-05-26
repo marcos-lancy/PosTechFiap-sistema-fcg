@@ -4,7 +4,7 @@ namespace Fcg.WebApi.Controllers;
 
 [ApiController]
 [Produces("application/json")]
-[Route("api/[controller]")]
+[Route("api/v{version:apiVersion}/[controller]")]
 public abstract class MainController : ControllerBase
 {
 }
