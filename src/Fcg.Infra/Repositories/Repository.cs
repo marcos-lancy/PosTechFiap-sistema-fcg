@@ -2,6 +2,7 @@
 using Fcg.Domain.Interfaces;
 using Fcg.Infra.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Fcg.Infra.Repositories;
 
@@ -16,9 +17,14 @@ public class Repository<T> : IRepository<T> where T : EntityBase
         _dbSet = context.Set<T>();
     }
 
-    public async Task<IEnumerable<T>> ObterTodosAsync()
+    public async Task<List<T>> ObterAsync(Expression<Func<T, bool>>? filtro = null)
     {
-        return await _dbSet.ToListAsync();
+        IQueryable<T> query = _dbSet;
+
+        if (filtro is not null)
+            query = query.Where(filtro);
+
+        return await query.ToListAsync();
     }
 
     public async Task<T?> ObterPorIdAsync(Guid id)

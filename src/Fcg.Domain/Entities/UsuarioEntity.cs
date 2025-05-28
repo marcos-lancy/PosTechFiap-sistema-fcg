@@ -10,7 +10,7 @@ public class UsuarioEntity : EntityBase
 
     public string SenhaHash { get; set; } = string.Empty;
 
-    public TipoPessoaEnum Role { get; set; } = TipoPessoaEnum.Usuario;
+    public RoleEnum Role { get; set; } = RoleEnum.Usuario;
 
     public List<JogoAdquiridoEntity> JogosAdquiridos { get; set; } = [];
 
@@ -23,7 +23,7 @@ public class UsuarioEntity : EntityBase
         string nome,
         string email,
         string senhaHash,
-        TipoPessoaEnum role,
+        RoleEnum role,
         List<JogoAdquiridoEntity> jogosAdquiridos)
     {
         Id = id;

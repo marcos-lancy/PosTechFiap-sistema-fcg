@@ -1,7 +1,5 @@
-﻿using Fcg.Application.AppServices;
-using Fcg.Application.Dtos;
+﻿using Fcg.Application.Dtos.Usuario;
 using Fcg.Application.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Fcg.WebApi.Controllers;
@@ -12,37 +10,24 @@ namespace Fcg.WebApi.Controllers;
 public class AuthController : MainController
 {
     private readonly IUsuarioAppService _service;
-    private readonly JwtAppService _jwt;
-
-    public AuthController(
-        IUsuarioAppService service,
-        JwtAppService jwt)
+    private readonly IServiceProvider _serviceProvider;
+    public AuthController(IUsuarioAppService service, IServiceProvider serviceProvider)
     {
         _service = service;
-        _jwt = jwt;
+        _serviceProvider = serviceProvider;
     }
 
     [HttpPost("entrar")]
-    public async Task<IActionResult> Entrar([FromBody] EfetuarLoginDto request)
+    public async Task<IActionResult> Entrar([FromBody] LoginDto request)
     {
-        // TODO: Fazer logica de login em uma service
-        var usuario = await _service.ObterPorEmailAsync(request.Email);
-        if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.Senha, usuario.SenhaHash))
-            return Unauthorized();
-
-        var token = _jwt.GerarToken(usuario.Email, usuario.Role.ToString());
-
-        return Ok(new
-        {
-            token
-        });
+        var resultado = await _service.EfetuarLoginAsync(request.Email, request.Senha);
+        return Ok(new { token = resultado });
     }
 
     [HttpPost("registrar")]
     public async Task<IActionResult> Registrar([FromBody] CadastrarUsuarioDto request)
     {
         var usuario = await _service.CadastrarAsync(request);
-
         return Created($"/usuarios/{usuario.Id}", usuario);
     }
 }

@@ -1,6 +1,7 @@
-﻿using Fcg.Application.Dtos;
+﻿using Fcg.Application.Dtos.Jogo;
 using Fcg.Application.Interfaces;
 using Fcg.Domain.Entities;
+using Fcg.Domain.Exceptions;
 using Fcg.Domain.Interfaces;
 
 namespace Fcg.Application.AppServices;
@@ -16,7 +17,7 @@ public class JogoAppService : IJogoAppService
 
     public async Task<IEnumerable<JogoDto>> ObterTodosAsync()
     {
-        var dados = await _jogoRepository.ObterTodosAsync();
+        var dados = await _jogoRepository.ObterAsync();
         return dados.Select(x => new JogoDto
         {
             Id = x.Id,
@@ -29,29 +30,31 @@ public class JogoAppService : IJogoAppService
     {
         var dado = await _jogoRepository.ObterPorIdAsync(id);
 
-        if (dado != null)
-        {
-            return new JogoDto()
-            {
-                Id = dado.Id,
-                Nome = dado.Nome,
-                Descricao = dado.Descricao,
-            };
-        }
+        if (dado == null)
+            throw new NotFoundException();
 
-        return null;
+        return new JogoDto()
+        {
+            Id = dado.Id,
+            Nome = dado.Nome,
+            Descricao = dado.Descricao,
+        };
     }
 
-    public async Task<JogoDto> CadastrarAsync(CadastrarJogoRequest jogo)
+    public async Task<JogoDto> CadastrarAsync(CadastrarJogoDto dto)
     {
+        var dbData = await _jogoRepository.ObterAsync(x => x.Nome == dto.Nome);
+        if (dbData is not null)
+            throw new ConflictException("Um jogo com este nome já está cadastrado no sistema.");
+
         var retorno = await _jogoRepository.AdicionarAsync(
             new JogoEntity(
-                jogo.Nome,
-                jogo.Descricao,
-                jogo.Preco));
-        
-        return new JogoDto() 
-        { 
+                dto.Nome,
+                dto.Descricao,
+                dto.Preco));
+
+        return new JogoDto()
+        {
             Id = retorno.Id,
             Nome = retorno.Nome,
             Descricao = retorno.Descricao,
@@ -59,17 +62,25 @@ public class JogoAppService : IJogoAppService
         };
     }
 
-    public async Task AtualizarAsync(JogoDto jogo)
+    public async Task AtualizarAsync(Guid id, AtualizarJogoDto dto)
     {
-        await _jogoRepository.Atualizar(
-            new JogoEntity());
+        var dbData = await _jogoRepository.ObterPorIdAsync(id);
+        if (dbData is null)
+            throw new NotFoundException();
+
+        dbData.Nome = dto.Nome;
+        dbData.Descricao = dto.Descricao;
+        dbData.Preco = dto.Preco;
+
+        await _jogoRepository.Atualizar(dbData);
     }
 
     public async Task RemoverAsync(Guid id)
     {
-        var jogo = await _jogoRepository.ObterPorIdAsync(id);
-        
-        if (jogo != null)
-            await _jogoRepository.Remover(jogo);
+        var dbData = await _jogoRepository.ObterPorIdAsync(id);
+        if (dbData is null)
+            throw new NotFoundException();
+
+        await _jogoRepository.Remover(dbData);
     }
 }

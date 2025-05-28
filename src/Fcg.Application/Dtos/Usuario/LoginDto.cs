@@ -1,4 +1,4 @@
-﻿namespace Fcg.Application.Dtos;
+﻿namespace Fcg.Application.Dtos.Usuario;
 public class LoginDto
 {
     public string Email { get; set; } = string.Empty;

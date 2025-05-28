@@ -1,4 +1,5 @@
 ﻿using Fcg.Application.ApiSettings;
+using Fcg.Application.Interfaces;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -6,7 +7,7 @@ using System.Security.Claims;
 using System.Text;
 
 namespace Fcg.Application.AppServices;
-public class JwtAppService
+public class JwtAppService : IJwtAppService
 {
     private readonly JwtSettings _settings;
 

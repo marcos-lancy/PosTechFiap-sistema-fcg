@@ -1,4 +1,4 @@
-﻿using Fcg.Application.Dtos;
+﻿using Fcg.Application.Dtos.Jogo;
 using Fcg.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,16 +17,8 @@ namespace Fcg.WebApi.Controllers
             _service = service;
         }
 
-        [HttpPost]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Cadastrar([FromBody] CadastrarJogoRequest dto)
-        {
-            var registro = await _service.CadastrarAsync(dto);
-            return Created($"/jogos/{registro.Id}", registro);
-        }
-
         [HttpGet]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Consultar()
         {
             var jogos = await _service.ObterTodosAsync();
@@ -34,11 +26,37 @@ namespace Fcg.WebApi.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<IActionResult> Consultar([FromRoute] Guid id)
         {
             var jogo = await _service.ObterPorIdAsync(id);
-            return jogo is null ? NotFound() : Ok(jogo);
+            return Ok(jogo);
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Cadastrar([FromBody] CadastrarJogoDto dto)
+        {
+            var registro = await _service.CadastrarAsync(dto);
+            return Created($"/jogos/{registro.Id}", registro);
+        }
+
+        [HttpPut("{id:guid}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Atualizar(
+            [FromQuery] Guid id,
+            [FromBody] AtualizarJogoDto dto)
+        {
+            await _service.AtualizarAsync(id, dto);
+            return NoContent();
+        }
+
+        [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> Remover(Guid id)
+        {
+            await _service.RemoverAsync(id);
+            return NoContent();
         }
     }
 }

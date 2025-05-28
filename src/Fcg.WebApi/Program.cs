@@ -5,6 +5,9 @@ using Fcg.Application.Interfaces;
 using Fcg.Domain.Interfaces;
 using Fcg.Infra.Data.Contexts;
 using Fcg.Infra.Repositories;
+using Fcg.WebApi.ApiConfigurations;
+using Fcg.WebApi.Filters;
+using Fcg.WebApi.Middlewares;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -19,12 +22,21 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 #endregion
 
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ValidateGuidQueryParamsFilter>();
+});
+
 #region DIs
+
+builder.Services.AddAbstractValidations();
+
 builder.Services.AddScoped<IUsuarioAppService, UsuarioAppService>();
 builder.Services.AddScoped<IJogoAppService, JogoAppService>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
 #endregion
 
 #region Swagger
@@ -83,7 +95,7 @@ builder.Services.AddApiVersioning(options =>
 
 #region Jwt
 builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection("JwtSettings"));
-builder.Services.AddSingleton<JwtAppService>();
+builder.Services.AddSingleton<IJwtAppService, JwtAppService>();
 
 builder.Services.AddAuthentication(options =>
 {
@@ -109,12 +121,11 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 #endregion
 
-builder.Services.AddControllers();
-
 var app = builder.Build();
 
 #region Middlewares
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseSwagger();
 app.UseSwaggerUI();
