@@ -19,7 +19,7 @@ namespace Fcg.WebApi.Controllers
 
         [HttpGet]
         [Authorize]
-        public async Task<IActionResult> Consultar()
+        public async Task<IActionResult> ObterTodos()
         {
             var jogos = await _service.ObterTodosAsync();
             return Ok(jogos);
@@ -27,7 +27,7 @@ namespace Fcg.WebApi.Controllers
 
         [HttpGet("{id:guid}")]
         [Authorize]
-        public async Task<IActionResult> Consultar([FromRoute] Guid id)
+        public async Task<IActionResult> ObterPorId([FromRoute] Guid id)
         {
             var jogo = await _service.ObterPorIdAsync(id);
             return Ok(jogo);
@@ -44,7 +44,7 @@ namespace Fcg.WebApi.Controllers
         [HttpPut("{id:guid}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Atualizar(
-            [FromQuery] Guid id,
+            [FromRoute] Guid id,
             [FromBody] AtualizarJogoDto dto)
         {
             await _service.AtualizarAsync(id, dto);
@@ -53,7 +53,7 @@ namespace Fcg.WebApi.Controllers
 
         [HttpDelete("{id:guid}")]
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Remover(Guid id)
+        public async Task<IActionResult> Remover([FromRoute] Guid id)
         {
             await _service.RemoverAsync(id);
             return NoContent();

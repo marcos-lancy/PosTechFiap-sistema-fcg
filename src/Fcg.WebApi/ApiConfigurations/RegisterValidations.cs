@@ -10,6 +10,8 @@ public static class RegisterValidations
     {
         services.AddValidatorsFromAssembly(typeof(CadastrarUsuarioDtoValidator).Assembly);
         services.AddValidatorsFromAssembly(typeof(AtualizarUsuarioDtoValidator).Assembly);
+        services.AddValidatorsFromAssembly(typeof(EfetuarLoginDtoValidator).Assembly);
+        
         services.AddValidatorsFromAssembly(typeof(CadastrarJogoDtoValidator).Assembly);
         services.AddValidatorsFromAssembly(typeof(AtualizarJogoDtoValidator).Assembly);
 

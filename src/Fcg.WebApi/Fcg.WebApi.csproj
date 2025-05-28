@@ -2,6 +2,7 @@
 
 	<PropertyGroup>
 		<TargetFramework>net8.0</TargetFramework>
+		<RootNamespace>Fcg.WebApi</RootNamespace>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<UserSecretsId>57d7c068-55b6-4f9f-bce3-4de58b3abdb2</UserSecretsId>
@@ -30,6 +31,12 @@
 		<ProjectReference Include="..\Fcg.Application\Fcg.Application.csproj" />
 		<ProjectReference Include="..\Fcg.Domain\Fcg.Domain.csproj" />
 		<ProjectReference Include="..\Fcg.Infra\Fcg.Infra.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Compile Update="Program.cs">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </Compile>
 	</ItemGroup>
 
 </Project>

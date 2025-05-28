@@ -1,6 +1,8 @@
 ﻿using Fcg.Application.Dtos.Usuario;
 using Fcg.Application.Interfaces;
+using Fcg.Domain.Exceptions.Responses;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Fcg.WebApi.Controllers;
 
@@ -17,13 +19,21 @@ public class AuthController : MainController
         _serviceProvider = serviceProvider;
     }
 
+    [ProducesResponseType(typeof(TokenLoginDto), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     [HttpPost("entrar")]
-    public async Task<IActionResult> Entrar([FromBody] LoginDto request)
+    public async Task<IActionResult> Entrar([FromBody] EfetuarLoginDto request)
     {
         var resultado = await _service.EfetuarLoginAsync(request.Email, request.Senha);
-        return Ok(new { token = resultado });
+        return Ok(new TokenLoginDto(resultado));
     }
 
+    [ProducesResponseType(typeof(UsuarioDto), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Conflict)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+    [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
     [HttpPost("registrar")]
     public async Task<IActionResult> Registrar([FromBody] CadastrarUsuarioDto request)
     {

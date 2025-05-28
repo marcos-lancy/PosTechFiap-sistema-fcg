@@ -20,7 +20,7 @@ namespace Fcg.WebApi.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> Obter(Guid id)
+        public async Task<IActionResult> ObterPorId(Guid id)
         {
             var usuario = await _service.ObterPorIdAsync(id);
             return Ok(usuario);
@@ -35,7 +35,7 @@ namespace Fcg.WebApi.Controllers
 
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Atualizar(
-            [FromQuery] Guid id, 
+            [FromRoute] Guid id, 
             [FromBody] AtualizarUsuarioDto usuarioDto)
         {
             await _service.AtualizarAsync(id, usuarioDto);
@@ -44,7 +44,7 @@ namespace Fcg.WebApi.Controllers
 
         [HttpPut("{id:guid}/role")]
         public async Task<IActionResult> AtualizarRole(
-            [FromQuery] Guid id,
+            [FromRoute] Guid id,
             [FromBody] RoleEnum role)
         {
             await _service.AtualizarRoleAsync(id, role);

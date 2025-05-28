@@ -103,7 +103,7 @@ public class UsuarioAppService : IUsuarioAppService
             throw new NotFoundException();
 
         var dbDataEmail = await _usuarioRepository.ObterAsync(x => x.Id != id && x.Email == dto.Email);
-        if (dbDataEmail != null)
+        if (dbDataEmail?.Count != 0)
             throw new ConflictException("O endereço de e-mail informado já está cadastrado.");
 
         dbData.Nome = dto.Nome;

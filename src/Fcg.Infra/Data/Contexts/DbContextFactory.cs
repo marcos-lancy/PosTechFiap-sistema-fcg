@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
-using System.IO;
 
 namespace Fcg.Infra.Data.Contexts;
 public class DbContextFactory : IDesignTimeDbContextFactory<AppDbContext>

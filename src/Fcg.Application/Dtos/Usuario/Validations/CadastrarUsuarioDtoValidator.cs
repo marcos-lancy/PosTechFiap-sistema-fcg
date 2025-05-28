@@ -1,5 +1,4 @@
-﻿using Fcg.Application.Dtos.Usuario;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Fcg.Application.Dtos.Usuario.Validations;
 public class CadastrarUsuarioDtoValidator : AbstractValidator<CadastrarUsuarioDto>
