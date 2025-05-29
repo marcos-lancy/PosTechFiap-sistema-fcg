@@ -33,14 +33,24 @@ public class ExceptionMiddleware
         context.Response.ContentType = "application/json";
         context.Response.StatusCode = GetResponseStatusCode(exception);
 
+        var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+        var isDevelopment = env == Environments.Development;
+
+        var errors = new Dictionary<string, string[]>();
+
+        if (isDevelopment && exception.InnerException != null)
+            errors.Add("InnerException", [exception.InnerException.ToString()]);
+
         var jsonResponse = JsonSerializer.Serialize(
             new ErrorResponse(
                 context.Response.StatusCode,
                 exception.Message,
-                new Dictionary<string, string[]>()));
+                errors));
 
         return context.Response.WriteAsync(jsonResponse);
     }
+
+
 
     private static int GetResponseStatusCode(Exception exception) => exception switch
     {

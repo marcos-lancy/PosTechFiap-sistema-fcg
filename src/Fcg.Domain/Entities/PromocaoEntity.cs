@@ -2,7 +2,7 @@
 public class PromocaoEntity : EntityBase
 {
     public Guid JogoId { get; set; }
-    public JogoEntity Jogo { get; set; } = null!;
+    public virtual JogoEntity Jogo { get; set; } = null!;
 
     public decimal PrecoPromocional { get; set; }
     public DateTime DataInicio { get; set; }

@@ -6,7 +6,7 @@ public class JogoEntity : EntityBase
     public string Descricao { get; set; } = string.Empty;
     public decimal Preco { get; set; }
     public bool Ativo { get; set; } = true;
-    public List<PromocaoEntity> Promocoes { get; set; } = [];
+    public virtual List<PromocaoEntity> Promocoes { get; set; } = [];
 
     public JogoEntity()
     {

@@ -1,4 +1,5 @@
 ﻿using Fcg.Application.Dtos.Jogo.Validations;
+using Fcg.Application.Dtos.Promocao.Validations;
 using Fcg.Application.Dtos.Usuario.Validations;
 using FluentValidation;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
@@ -14,6 +15,8 @@ public static class RegisterValidations
         
         services.AddValidatorsFromAssembly(typeof(CadastrarJogoDtoValidator).Assembly);
         services.AddValidatorsFromAssembly(typeof(AtualizarJogoDtoValidator).Assembly);
+
+        services.AddValidatorsFromAssembly(typeof(CadastrarPromocaoDtoValidator).Assembly);
 
         services.AddFluentValidationAutoValidation(options =>
         {

@@ -12,7 +12,7 @@ public class UsuarioEntity : EntityBase
 
     public RoleEnum Role { get; set; } = RoleEnum.Usuario;
 
-    public List<JogoAdquiridoEntity> JogosAdquiridos { get; set; } = [];
+    public virtual List<JogoAdquiridoEntity> JogosAdquiridos { get; set; } = [];
 
     public UsuarioEntity()
     {

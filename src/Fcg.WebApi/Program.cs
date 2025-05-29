@@ -12,15 +12,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #region database
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddDbContext<AppDbContext>(options => options
+    .UseLazyLoadingProxies()
+    .UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 #endregion
 
 builder.Services.AddControllers(options =>
@@ -34,6 +36,7 @@ builder.Services.AddAbstractValidations();
 
 builder.Services.AddScoped<IUsuarioAppService, UsuarioAppService>();
 builder.Services.AddScoped<IJogoAppService, JogoAppService>();
+builder.Services.AddScoped<IPromocaoAppService, PromocaoAppService>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
