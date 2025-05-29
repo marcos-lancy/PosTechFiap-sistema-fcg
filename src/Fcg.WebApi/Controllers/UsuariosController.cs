@@ -3,9 +3,13 @@ using Fcg.Application.Interfaces;
 using Fcg.Domain.Enums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Fcg.WebApi.Controllers
 {
+    /// <summary>
+    /// Responsável pelos endpoints de gerenciamento de usuários.
+    /// </summary>
     [ApiController]
     [Produces("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
@@ -19,6 +23,14 @@ namespace Fcg.WebApi.Controllers
             _service = service;
         }
 
+        /// <summary>
+        /// Obtém os detalhes de um usuário específico pelo seu ID.
+        /// </summary>
+        /// <param name="id">ID do usuário.</param>
+        [SwaggerOperation(
+            Summary = "Obtém um usuário por ID.",
+            Description = "Retorna os detalhes de um usuário específico a partir do seu identificador."
+        )]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> ObterPorId(Guid id)
         {
@@ -26,6 +38,13 @@ namespace Fcg.WebApi.Controllers
             return Ok(usuario);
         }
 
+        /// <summary>
+        /// Lista todos os usuários cadastrados.
+        /// </summary>
+        [SwaggerOperation(
+            Summary = "Lista todos os usuários.",
+            Description = "Retorna uma lista com todos os usuários cadastrados no sistema."
+        )]
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
@@ -33,6 +52,15 @@ namespace Fcg.WebApi.Controllers
             return Ok(usuarios);
         }
 
+        /// <summary>
+        /// Atualiza os dados de um usuário existente.
+        /// </summary>
+        /// <param name="id">ID do usuário.</param>
+        /// <param name="usuarioDto">Novos dados do usuário.</param>
+        [SwaggerOperation(
+            Summary = "Atualiza um usuário.",
+            Description = "Atualiza as informações de um usuário existente."
+        )]
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Atualizar(
             [FromRoute] Guid id, 
@@ -42,6 +70,15 @@ namespace Fcg.WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Atualiza o perfil (role) de um usuário.
+        /// </summary>
+        /// <param name="id">ID do usuário.</param>
+        /// <param name="role">Novo perfil do usuário.</param>
+        [SwaggerOperation(
+            Summary = "Atualiza o perfil do usuário.",
+            Description = "Atualiza o perfil (role) de um usuário existente."
+        )]
         [HttpPut("{id:guid}/role")]
         public async Task<IActionResult> AtualizarRole(
             [FromRoute] Guid id,
@@ -51,6 +88,14 @@ namespace Fcg.WebApi.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Remove um usuário do sistema.
+        /// </summary>
+        /// <param name="id">ID do usuário.</param>
+        [SwaggerOperation(
+            Summary = "Remove um usuário.",
+            Description = "Remove um usuário do sistema pelo seu identificador."
+        )]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Remover(Guid id)
         {

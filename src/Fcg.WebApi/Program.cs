@@ -57,7 +57,7 @@ builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "Fiap Cloud Games API", Version = "v1" });
-
+    c.EnableAnnotations();
     var securityScheme = new OpenApiSecurityScheme
     {
         Name = "Authorization",
