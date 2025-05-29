@@ -25,7 +25,7 @@ public class EntrarTests : IClassFixture<CustomWebApplicationFactory<Program>>
         // Arrange
         var requestBody = new LoginDto()
         {
-            Email = "User1@email.com",
+            Email = "UserDelecao@email.com",
             Senha = "Senha@123",
         };
 
@@ -38,7 +38,7 @@ public class EntrarTests : IClassFixture<CustomWebApplicationFactory<Program>>
         var responseContent = JsonConvert.DeserializeObject<TokenLoginDto>(await response.Content.ReadAsStringAsync());
 
         // Assert
-        response.StatusCode.Should().Be(HttpStatusCode.Created);
+        response.StatusCode.Should().Be(HttpStatusCode.OK);
         responseContent.Should().NotBeNull();
         responseContent.Token.Should().NotBeEmpty();
     }

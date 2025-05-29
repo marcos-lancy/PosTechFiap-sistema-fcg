@@ -74,7 +74,7 @@ public class AtualizarJogosTests : IClassFixture<CustomWebApplicationFactory<Pro
         var dto = new AtualizarJogoDto
         {
             Nome = "Jogo",
-            Descricao = "Descrição",
+            Descricao = "Descrição do jogo",
             Preco = 10m
         };
         var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");
@@ -98,7 +98,7 @@ public class AtualizarJogosTests : IClassFixture<CustomWebApplicationFactory<Pro
         var dto = new AtualizarJogoDto
         {
             Nome = "Jogo",
-            Descricao = "Descrição",
+            Descricao = "Descrição do jogo",
             Preco = 10m
         };
         var content = new StringContent(JsonConvert.SerializeObject(dto), Encoding.UTF8, "application/json");

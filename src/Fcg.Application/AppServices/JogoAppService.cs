@@ -22,7 +22,9 @@ public class JogoAppService : IJogoAppService
         {
             Id = x.Id,
             Nome = x.Nome,
-            Descricao = x.Descricao
+            Descricao = x.Descricao,
+            Preco = x.Preco,
+            Ativo = x.Ativo,
         });
     }
 
@@ -38,13 +40,15 @@ public class JogoAppService : IJogoAppService
             Id = dado.Id,
             Nome = dado.Nome,
             Descricao = dado.Descricao,
+            Preco = dado.Preco,
+            Ativo = dado.Ativo,
         };
     }
 
     public async Task<JogoDto> CadastrarAsync(CadastrarJogoDto dto)
     {
         var dbData = await _jogoRepository.ObterAsync(x => x.Nome == dto.Nome);
-        if (dbData is not null)
+        if (dbData?.Count > 0)
             throw new ConflictException("Um jogo com este nome já está cadastrado no sistema.");
 
         var retorno = await _jogoRepository.AdicionarAsync(
@@ -59,6 +63,7 @@ public class JogoAppService : IJogoAppService
             Nome = retorno.Nome,
             Descricao = retorno.Descricao,
             Preco = retorno.Preco,
+            Ativo = retorno.Ativo,
         };
     }
 
@@ -67,6 +72,10 @@ public class JogoAppService : IJogoAppService
         var dbData = await _jogoRepository.ObterPorIdAsync(id);
         if (dbData is null)
             throw new NotFoundException();
+
+        var dbDataEmail = await _jogoRepository.ObterAsync(x => x.Id != id && x.Nome == dto.Nome);
+        if (dbDataEmail?.Count != 0)
+            throw new ConflictException("Um jogo com este nome já está cadastrado no sistema.");
 
         dbData.Nome = dto.Nome;
         dbData.Descricao = dto.Descricao;

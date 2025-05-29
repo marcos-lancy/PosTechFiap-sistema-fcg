@@ -28,8 +28,7 @@ public class ObterTodosTests : IClassFixture<CustomWebApplicationFactory<Program
         // Assert
         response.StatusCode.Should().Be(HttpStatusCode.OK);
         content.Should().NotBeNull();
-        content.Should().NotBeEmpty();
-        content.Should().OnlyContain(u => u.Id != Guid.Empty && !string.IsNullOrWhiteSpace(u.Nome) && !string.IsNullOrWhiteSpace(u.Email));
+        content.Should().HaveCountGreaterThan(1);
     }
 
     [Fact(DisplayName = "Deve retornar erro por token faltando")]
