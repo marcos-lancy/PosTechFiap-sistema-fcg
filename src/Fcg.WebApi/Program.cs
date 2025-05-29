@@ -3,6 +3,8 @@ using Fcg.Application.ApiSettings;
 using Fcg.Application.AppServices;
 using Fcg.Application.Interfaces;
 using Fcg.Domain.Interfaces;
+using Fcg.Domain.Interfaces.Services;
+using Fcg.Domain.Services;
 using Fcg.Infra.Data.Contexts;
 using Fcg.Infra.Repositories;
 using Fcg.WebApi.ApiConfigurations;
@@ -12,6 +14,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
@@ -30,6 +33,8 @@ builder.Services.AddControllers(options =>
     options.Filters.Add<ValidateGuidQueryParamsFilter>();
 });
 
+builder.Services.AddHttpContextAccessor();
+
 #region DIs
 
 builder.Services.AddAbstractValidations();
@@ -37,6 +42,10 @@ builder.Services.AddAbstractValidations();
 builder.Services.AddScoped<IUsuarioAppService, UsuarioAppService>();
 builder.Services.AddScoped<IJogoAppService, JogoAppService>();
 builder.Services.AddScoped<IPromocaoAppService, PromocaoAppService>();
+builder.Services.AddScoped<ICompraAppService, CompraAppService>();
+builder.Services.AddScoped<IUsuarioAutenticadoAppService, UsuarioAutenticadoAppService>();
+
+builder.Services.AddScoped<ICompraService, CompraService>();
 
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
@@ -115,10 +124,10 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = true,
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
-        ValidIssuer = jwtSettings.Issuer,
-        ValidAudience = jwtSettings.Audience,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.SecretKey)),
-        RoleClaimType = ClaimTypes.Role
+        ValidIssuer = jwtSettings?.Issuer,
+        ValidAudience = jwtSettings?.Audience,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings?.SecretKey)),
+        RoleClaimType = ClaimTypes.Role,
     };
 });
 
