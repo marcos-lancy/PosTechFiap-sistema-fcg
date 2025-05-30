@@ -25,4 +25,11 @@ Para fazer o deploy desse projeto rode:
 ```
 O comando vai gerar os containers docker necessários.
 
+Para inicializar o banco de dados via migrations:
+
+```bash
+  //Execute o seguinte comando no nível da pasta src
+  dotnet ef database update -p Fcg.Infra -s Fcg.WebApi
+```
+
 Em seu ambiente, acesse: http://localhost:5000/swagger/index.html .
