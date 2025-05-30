@@ -2,12 +2,12 @@
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
 
-namespace Fcg.Infra.Data.Contexts;
+namespace Fcg.Infra.Contexts;
 public class DbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
     public AppDbContext CreateDbContext(string[] args)
     {
-        var basePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "Fcg.Api");
+        var basePath = Path.Combine(Directory.GetCurrentDirectory(), "..", "Fcg.WebApi");
 
         var configuration = new ConfigurationBuilder()
             .SetBasePath(basePath) 

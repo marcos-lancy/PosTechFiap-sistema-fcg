@@ -1,6 +1,6 @@
 ﻿using Fcg.Domain.Entities;
 using Fcg.Domain.Interfaces;
-using Fcg.Infra.Data.Contexts;
+using Fcg.Infra.Contexts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Fcg.Infra.Repositories;

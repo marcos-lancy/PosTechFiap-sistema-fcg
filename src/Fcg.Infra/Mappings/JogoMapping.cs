@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Fcg.Infra.Data.Mappings;
+namespace Fcg.Infra.Mappings;
 public class JogoMapping : IEntityTypeConfiguration<JogoEntity>
 {
     public void Configure(EntityTypeBuilder<JogoEntity> builder)

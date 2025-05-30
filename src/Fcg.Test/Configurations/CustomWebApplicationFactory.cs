@@ -1,4 +1,4 @@
-﻿using Fcg.Infra.Data.Contexts;
+﻿using Fcg.Infra.Contexts;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 

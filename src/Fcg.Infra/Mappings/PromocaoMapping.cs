@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fcg.Infra.Data.Mappings;
+namespace Fcg.Infra.Mappings;
 public class PromocaoMapping : IEntityTypeConfiguration<PromocaoEntity>
 {
     public void Configure(EntityTypeBuilder<PromocaoEntity> builder)

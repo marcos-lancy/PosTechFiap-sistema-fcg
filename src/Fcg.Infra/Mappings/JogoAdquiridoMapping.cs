@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Fcg.Infra.Data.Mappings;
+namespace Fcg.Infra.Mappings;
 public class JogoAdquiridoMapping : IEntityTypeConfiguration<JogoAdquiridoEntity>
 {
     public void Configure(EntityTypeBuilder<JogoAdquiridoEntity> builder)

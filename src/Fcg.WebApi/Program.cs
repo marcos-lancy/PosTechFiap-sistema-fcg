@@ -5,7 +5,7 @@ using Fcg.Application.Interfaces;
 using Fcg.Domain.Interfaces;
 using Fcg.Domain.Interfaces.Services;
 using Fcg.Domain.Services;
-using Fcg.Infra.Data.Contexts;
+using Fcg.Infra.Contexts;
 using Fcg.Infra.Repositories;
 using Fcg.WebApi.ApiConfigurations;
 using Fcg.WebApi.Filters;

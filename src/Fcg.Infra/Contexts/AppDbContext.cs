@@ -1,7 +1,7 @@
 ﻿using Fcg.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fcg.Infra.Data.Contexts;
+namespace Fcg.Infra.Contexts;
 
 public class AppDbContext : DbContext
 {
