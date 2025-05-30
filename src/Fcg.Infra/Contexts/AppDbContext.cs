@@ -27,7 +27,7 @@ public class AppDbContext : DbContext
                 Email = "admin@gmail.com",
                 Nome = "Admin User",
                 Role = Domain.Enums.RoleEnum.Admin,
-                SenhaHash = "$2a$11$rmSS27u7nHi4vjKrGTda..G.cldPNevWLAhRijxPsRvE6g7j66Jea"
+                SenhaHash = "$2a$11$rmSS27u7nHi4vjKrGTda..G.cldPNevWLAhRijxPsRvE6g7j66Jea" // Senha = Admin@123
             });
 
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
