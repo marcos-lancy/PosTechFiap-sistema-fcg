@@ -19,6 +19,17 @@ public class AppDbContext : DbContext
                     .Where(p => p.ClrType == typeof(string))))
             property.SetColumnType("varchar(100)");
 
+
+        modelBuilder.Entity<UsuarioEntity>()
+            .HasData(new UsuarioEntity
+            {
+                Id = Guid.NewGuid(),
+                Email = "admin@gmail.com",
+                Nome = "Admin User",
+                Role = Domain.Enums.RoleEnum.Admin,
+                SenhaHash = "$2a$11$rmSS27u7nHi4vjKrGTda..G.cldPNevWLAhRijxPsRvE6g7j66Jea"
+            });
+
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 
