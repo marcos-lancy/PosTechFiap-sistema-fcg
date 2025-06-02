@@ -1,9 +1,11 @@
 ﻿using Fcg.Application.Dtos.Usuario;
 using Fcg.Application.Interfaces;
 using Fcg.Domain.Enums;
+using Fcg.Domain.Exceptions.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 
 namespace Fcg.WebApi.Controllers
 {
@@ -31,6 +33,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Obtém um usuário por ID.",
             Description = "Retorna os detalhes de um usuário específico a partir do seu identificador."
         )]
+        [ProducesResponseType(typeof(UsuarioDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> ObterPorId(Guid id)
         {
@@ -45,6 +51,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Lista todos os usuários.",
             Description = "Retorna uma lista com todos os usuários cadastrados no sistema."
         )]
+        [ProducesResponseType(typeof(List<UsuarioDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
@@ -61,6 +71,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Atualiza um usuário.",
             Description = "Atualiza as informações de um usuário existente."
         )]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpPut("{id:guid}")]
         public async Task<IActionResult> Atualizar(
             [FromRoute] Guid id, 
@@ -79,6 +93,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Atualiza o perfil do usuário.",
             Description = "Atualiza o perfil (role) de um usuário existente."
         )]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpPut("{id:guid}/role")]
         public async Task<IActionResult> AtualizarRole(
             [FromRoute] Guid id,
@@ -96,6 +114,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Remove um usuário.",
             Description = "Remove um usuário do sistema pelo seu identificador."
         )]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Remover(Guid id)
         {

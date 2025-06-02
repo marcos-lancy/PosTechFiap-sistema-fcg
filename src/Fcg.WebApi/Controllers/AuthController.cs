@@ -52,7 +52,7 @@ public class AuthController : MainController
         Summary = "Registra um novo usuário.",
         Description = "Cria um novo usuário no sistema e retorna seus dados."
     )]
-    [ProducesResponseType(typeof(UsuarioDto), (int)HttpStatusCode.OK)]
+    [ProducesResponseType(typeof((string, UsuarioDto)), (int)HttpStatusCode.Created)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Conflict)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
     [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]

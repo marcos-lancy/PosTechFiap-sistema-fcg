@@ -1,8 +1,11 @@
 ﻿using Fcg.Application.Dtos.Promocao;
+using Fcg.Application.Dtos.Usuario;
 using Fcg.Application.Interfaces;
+using Fcg.Domain.Exceptions.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 
 namespace Fcg.WebApi.Controllers
 {
@@ -30,6 +33,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Obtém uma promoção por ID.",
             Description = "Retorna os detalhes de uma promoção específica a partir do seu identificador."
         )]
+        [ProducesResponseType(typeof(PromocaoDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> ObterPorId(Guid id)
         {
@@ -44,6 +51,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Lista todas as promoções.",
             Description = "Retorna uma lista com todas as promoções cadastradas no sistema."
         )]
+        [ProducesResponseType(typeof(List<PromocaoDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpGet]
         public async Task<IActionResult> ObterTodos()
         {
@@ -59,6 +70,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Cadastra uma nova promoção.",
             Description = "Adiciona uma nova promoção para um jogo no sistema."
         )]
+        [ProducesResponseType(typeof((string, PromocaoDto)), (int)HttpStatusCode.Created)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpPost]
         public async Task<IActionResult> Cadastrar([FromBody] CadastrarPromocaoDto role)
         {
@@ -74,6 +89,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Remove uma promoção.",
             Description = "Remove uma promoção do sistema pelo seu identificador."
         )]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Remover(Guid id)
         {

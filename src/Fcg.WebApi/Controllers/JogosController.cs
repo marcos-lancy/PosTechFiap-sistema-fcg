@@ -1,8 +1,11 @@
 ﻿using Fcg.Application.Dtos.Jogo;
+using Fcg.Application.Dtos.Usuario;
 using Fcg.Application.Interfaces;
+using Fcg.Domain.Exceptions.Responses;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
 
 namespace Fcg.WebApi.Controllers
 {
@@ -28,6 +31,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Lista todos os jogos.",
             Description = "Retorna uma lista com todos os jogos cadastrados no sistema."
         )]
+        [ProducesResponseType(typeof(List<JogoDto>), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpGet]
         [Authorize]
         public async Task<IActionResult> ObterTodos()
@@ -44,6 +51,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Obtém um jogo por ID.",
             Description = "Retorna os detalhes de um jogo específico a partir do seu identificador."
         )]
+        [ProducesResponseType(typeof(JogoDto), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpGet("{id:guid}")]
         [Authorize]
         public async Task<IActionResult> ObterPorId([FromRoute] Guid id)
@@ -56,6 +67,10 @@ namespace Fcg.WebApi.Controllers
         /// Cadastra um novo jogo no sistema.
         /// </summary>
         /// <param name="dto">Dados do novo jogo.</param>
+        [ProducesResponseType(typeof((string, JogoDto)), (int)HttpStatusCode.Created)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [SwaggerOperation(
             Summary = "Cadastra um novo jogo.",
             Description = "Adiciona um novo jogo ao sistema. Requer permissão de administrador."
@@ -73,6 +88,10 @@ namespace Fcg.WebApi.Controllers
         /// </summary>
         /// <param name="id">ID do jogo.</param>
         /// <param name="dto">Novos dados do jogo.</param>
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [SwaggerOperation(
             Summary = "Atualiza um jogo.",
             Description = "Atualiza as informações de um jogo existente. Requer permissão de administrador."
@@ -95,6 +114,10 @@ namespace Fcg.WebApi.Controllers
             Summary = "Remove um jogo.",
             Description = "Remove um jogo do sistema pelo seu identificador. Requer permissão de administrador."
         )]
+        [ProducesResponseType(typeof(void), (int)HttpStatusCode.NoContent)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.BadRequest)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
+        [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpDelete("{id:guid}")]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Remover([FromRoute] Guid id)
