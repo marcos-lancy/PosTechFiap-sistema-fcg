@@ -1,7 +1,6 @@
 ﻿using Fcg.Domain.Entities;
 using Fcg.Domain.Enums;
 using Fcg.Infra.Contexts;
-using FluentAssertions.Common;
 
 namespace Fcg.Test.Configurations;
 

@@ -1,9 +1,7 @@
 ﻿using Fcg.Application.Dtos.Jogo;
 using Fcg.Application.Dtos.Promocao;
-using Fcg.Application.Dtos.Usuario;
 using Fcg.Application.Interfaces;
 using Fcg.Domain.Entities;
-using Fcg.Domain.Enums;
 using Fcg.Domain.Exceptions;
 using Fcg.Domain.Interfaces;
 

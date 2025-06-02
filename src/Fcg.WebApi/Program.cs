@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
@@ -37,16 +36,19 @@ builder.Services.AddHttpContextAccessor();
 
 #region DIs
 
+/// Applications
 builder.Services.AddAbstractValidations();
-
 builder.Services.AddScoped<IUsuarioAppService, UsuarioAppService>();
 builder.Services.AddScoped<IJogoAppService, JogoAppService>();
 builder.Services.AddScoped<IPromocaoAppService, PromocaoAppService>();
 builder.Services.AddScoped<ICompraAppService, CompraAppService>();
 builder.Services.AddScoped<IUsuarioAutenticadoAppService, UsuarioAutenticadoAppService>();
+builder.Services.AddScoped<IContaAppService, ContaAppService>();
 
+/// Domains
 builder.Services.AddScoped<ICompraService, CompraService>();
 
+/// Repositories
 builder.Services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 

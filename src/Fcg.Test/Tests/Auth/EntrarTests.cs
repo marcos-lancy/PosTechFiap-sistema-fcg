@@ -1,5 +1,4 @@
 ﻿using Fcg.Application.Dtos.Usuario;
-using Fcg.Domain.Enums;
 using Fcg.Domain.Exceptions.Responses;
 using Fcg.Test.Configurations;
 using FluentAssertions;

@@ -1,5 +1,4 @@
 ﻿using Fcg.Application.Dtos.Jogo;
-using Fcg.Application.Dtos.Usuario;
 using Fcg.Application.Interfaces;
 using Fcg.Domain.Exceptions.Responses;
 using Microsoft.AspNetCore.Authorization;
