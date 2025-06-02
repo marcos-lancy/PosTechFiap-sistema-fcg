@@ -148,6 +148,7 @@ await app.ApplyMigrationsWithSeedsAsync();
 
 #region Middlewares
 
+app.UseMiddleware<LoggingMiddleware>();
 app.UseMiddleware<ExceptionMiddleware>();
 app.UseHttpsRedirection();
 app.UseSwagger();
