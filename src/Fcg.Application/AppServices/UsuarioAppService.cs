@@ -37,7 +37,8 @@ public class UsuarioAppService : IUsuarioAppService
         {
             Id = u.Id,
             Nome = u.Nome,
-            Role = u.Role
+            Role = u.Role,
+            Email = u.Email
         });
     }
 

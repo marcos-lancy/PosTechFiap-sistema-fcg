@@ -15,7 +15,6 @@ namespace Fcg.WebApi.Controllers
     [ApiController]
     [Produces("application/json")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize(Roles = "Admin")]
     public class PromocoesController : MainController
     {
         private readonly IPromocaoAppService _service;
@@ -38,6 +37,7 @@ namespace Fcg.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpGet("{id:guid}")]
+        [Authorize]
         public async Task<IActionResult> ObterPorId(Guid id)
         {
             var promocao = await _service.ObterPorIdAsync(id);
@@ -56,6 +56,7 @@ namespace Fcg.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> ObterTodos()
         {
             var promocoes = await _service.ObterTodosAsync();
@@ -75,10 +76,11 @@ namespace Fcg.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Cadastrar([FromBody] CadastrarPromocaoDto role)
         {
             var promo = await _service.CadastrarAsync(role);
-            return Created($"api/v1/promocoes/{promo.Id}",promo);
+            return Created($"api/v1/promocoes/{promo.Id}", promo);
         }
 
         /// <summary>
@@ -94,6 +96,7 @@ namespace Fcg.WebApi.Controllers
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
         [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Remover(Guid id)
         {
             await _service.RemoverAsync(id);
