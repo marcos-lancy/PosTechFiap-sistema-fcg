@@ -2,6 +2,8 @@ using Asp.Versioning;
 using Fcg.Application.ApiSettings;
 using Fcg.Application.AppServices;
 using Fcg.Application.Interfaces;
+using Fcg.Domain.Entities;
+using Fcg.Domain.Enums;
 using Fcg.Domain.Interfaces;
 using Fcg.Domain.Interfaces.Services;
 using Fcg.Domain.Services;
@@ -137,6 +139,12 @@ builder.Services.AddAuthorization();
 #endregion
 
 var app = builder.Build();
+
+#region Migrations
+
+await app.ApplyMigrationsWithSeedsAsync();
+
+#endregion
 
 #region Middlewares
 
